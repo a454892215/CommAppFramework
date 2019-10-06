@@ -1,0 +1,105 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.hxg"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+
+    signingConfigs {
+        signing {
+            keyAlias 'test'
+            keyPassword '123456'
+            storeFile file('../keystore.jks')
+            storePassword '123456'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'boolean', 'IS_DEBUG', 'false'
+            signingConfig signingConfigs.signing
+            debuggable false
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'boolean', 'IS_DEBUG', 'true'
+            signingConfig signingConfigs.signing
+            debuggable true
+        }
+    }
+    flavorDimensions "f1"
+    productFlavors {
+
+        product_1 {
+            /* 完成 no */
+            applicationId "com.test.product_1"
+            versionCode 102
+            versionName "1.0.2"
+            dimension "f1"
+            resValue "string", "app_name", "测试1"
+            resValue "bool", "auto_updates", 'true'
+        }
+
+        product_2 {
+            /* 完成 no */
+            applicationId "com.test.product_2"
+            versionCode 101
+            versionName "1.0.1"
+            dimension "f1"
+            resValue "string", "app_name", "测试2"
+            resValue "bool", "auto_updates", 'true'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def appInfo = "V" + variant.versionName + getAppInfo() + variant.name
+            buildConfigField('String', 'app_info', "\"" + appInfo + "\"")
+            outputFileName = appInfo + ".apk"
+        }
+    }
+}
+
+
+static def getAppInfo() {
+    return getLastCommitInfo() + new Date().format('yy年MM月dd日HH时mm分ss秒')
+}
+
+static def getLastCommitInfo() {
+    def p1 = 'git log -1 --pretty=format:"%h-%ci"'.execute()
+    String logInfo = getGitInfo(p1)
+    def p2 = 'git symbolic-ref --short HEAD'.execute()
+    String currentBranch = getGitInfo(p2).trim()
+    String info = "[git-" + currentBranch + "-" + logInfo + "]-"
+    return info
+}
+
+static String getGitInfo(p1) {
+    p1.waitFor()
+    InputStream is = p1.getInputStream()
+    String text = is.getText("utf-8").replace(":", "_").replace("+0800", "")
+    is.close()
+    text
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
+    implementation 'com.common:Common:1.0.4'
+}
