@@ -18,7 +18,7 @@ allprojects {
         maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}
         maven{url 'https://jitpack.io'}
         maven{url 'file:D:\\work\\projects\\Common\\androidAppUtil\\repository'}
-        maven{url 'D:\\work\\AndroidProjects\\CommonLibaray\\Common\\repository'}
+        maven{url 'D:\\work\\projects\\Common\\Common\\repository'}
         google()
         jcenter()
     }
