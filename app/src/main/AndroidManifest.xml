@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme.CommonTheme"
             android:configChanges="screenSize|keyboardHidden|orientation"/>
 
     </application>

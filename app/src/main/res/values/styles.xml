@@ -9,7 +9,11 @@
     </style>
 
     <style name="AppTheme.SplashTheme" parent="CommonAppTheme">
-        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:windowBackground">@mipmap/bg_splash</item>
+    </style>
+
+    <style name="AppTheme.CommonTheme" parent="CommonAppTheme">
+        <item name="android:windowBackground">@color/gray</item>
     </style>
 
 </resources>

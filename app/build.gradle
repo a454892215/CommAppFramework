@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.hxg"
+        applicationId "com.common.app"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
@@ -70,7 +70,7 @@ android {
         variant.outputs.all {
             def appInfo = "V" + variant.versionName + getAppInfo() + variant.name
             buildConfigField('String', 'app_info', "\"" + appInfo + "\"")
-            outputFileName = appInfo + ".apk"
+             outputFileName = variant.name + ".apk"
         }
     }
 }
