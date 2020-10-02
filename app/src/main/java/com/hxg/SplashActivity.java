@@ -13,7 +13,7 @@ public class SplashActivity extends MyBaseActivity {
         getWindow().getDecorView().postDelayed(() -> {
             startActivity(new Intent(this, MainActivity.class));
             finish();
-        }, 5000);
+        }, 2000);
     }
 
     @Override
